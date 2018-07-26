@@ -1,0 +1,1190 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>NOC Visuals&trade;</title>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="css/third-party/graph.css">
+    <link type="text/css" rel="stylesheet" href="css/third-party/detail.css">
+    <link type="text/css" rel="stylesheet" href="css/third-party/legend.css">
+    <link type="text/css" rel="stylesheet" href="css/third-party/extensions.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300" rel="stylesheet">
+  </head>
+  <body>
+
+  <div id="container"></div>
+
+  <div id="loginOverlay">
+    <input id="username" class="loginInput" placeholder="Username" type="text">
+    <input id="password" class="loginInput" placeholder="Password" type="password">
+  </div>
+  <div id="mainOverlays">
+  <div id="paneLeft" class="pane">
+    <div class="paneContentTop">
+        <div id="dataMapContainer"></div>
+        <div id="trafficLineGraphs"></div>
+        <div id="countryGraphs"></div>
+    </div>
+    <div id="deviceWrapper">
+      <div id="deviceImagesWrapper">
+        <img id="mobileIcon" class="deviceIcons" src="images/mobile.svg" />
+        <img id="tabletIcon" class="deviceIcons" src="images/tablet.svg" />
+        <img id="monitorIcon" class="deviceIcons" src="images/monitor.svg" />
+      </div>
+      <div id="deviceCircleGraphMobile" class="deviceCircleGraphs">
+        <span id="deviceCircleGraphMobilePercent" class="deviceCircleGraphPercent">0%</span>
+      </div>
+      <div id="deviceCircleGraphTablet" class="deviceCircleGraphs">
+        <span id="deviceCircleGraphTabletPercent" class="deviceCircleGraphPercent">0%</span>
+      </div>
+      <div id="deviceCircleGraphMonitor" class="deviceCircleGraphs">
+        <span id="deviceCircleGraphMonitorPercent" class="deviceCircleGraphPercent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="paneRight" class="pane">
+    <div class="paneContentTop">
+        <div id="responseLineGraphs"></div>
+        <div id='circleScatterGraph'>
+          <div class="scatterCircleCenter"></div>
+        </div>
+    </div>
+    <div id="endPointGraphs"></div>
+  </div>
+
+  <div id="paneTop" class="pane">
+    <div id="clock"></div>
+    <span id="clockReset" onclick="timeReset()">Reset</span>
+  </div>
+
+  <div id="statusBarTop" class="pane"></div>
+
+  <div id="paneSim" class="pane">
+    <div><b>Simulation Control Panel</b></div>
+    <div>
+      <div style="display:flex">
+        <span >Connections: </span>
+        <input type="range" id="rangeSimConnections" min="2" max="2000" value="500" style="flex:1; margin:0 10px 0 10px;">
+        <span id="rangeSimConnectionsValue">500</span>
+      </div>
+      <div style="display:flex">
+        <span>Unique IPs: </span>
+        <input type="range" id="rangeSimIps"  min="1" max="2000" value="20" style="flex:1; margin:0 10px 0 10px;">
+        <span id="rangeSimIpsValue">20</span>
+      </div>
+      <div style="display:flex">
+        <span>Error Percent: </span>
+        <input type="range" id="rangeSimErrors"  min="0" max="100" value="10" style="flex:1; margin:0 10px 0 10px;">
+        <span id="rangeSimErrorsValue">10</span>
+      </div>
+    </div>
+    <div id="paneSimPullDownTab"><span>&#133;</span></div>
+  </div>
+
+  <div id="timeLine"></div>
+  <div id="timeLineLatency"></div>
+
+  <div id="paneInfo" class="pane">
+  </div>
+
+  <div id="paneMiddle" class="pane">
+    <!-- <div id="detailsBodyMetrics" class="paneMiddleContainer">
+      <div id="detailsHeaderMetrics">
+        <div><span id="objectDetailsType"></span></div>
+        <div>
+          <div class="successText" id="objectDetailsName" style="margin-bottom: 25px;font-size: 21px;"></div>
+          <div id="statusAndHealthContainer"><span id="objectDetailsStatus" style="margin-right: 10px;"></span> | <span id="objectDetailsHealth" style="margin-left: 10px;"></span></div>
+        </div>
+      </div>
+      <div id="cpuCard" class="largeMetricCard">
+        <canvas id="cpuPercentageGraph" class="cpuGraph" width="150px" height="120px"></canvas>
+        <div id="cpuPercentage" class="cpuGraph canvasMessageOverlay"></div>
+        <div class="canvasMessage">Combined Virtual CPU</div>
+      </div>
+      <div id="ramCard" class="largeMetricCard">
+        <canvas id="ramPercentageGraph" class="ramGraph" width="150px" height="120px"></canvas>
+        <div id="ramPercentage" class="ramGraph canvasMessageOverlay"></div>
+        <div class="canvasMessage">
+          Total: <span id="memoryTotal"></span>MB<br>
+          Used: <span id="memoryUsed"></span>MB<br>
+          Free: <span id="memoryFree"></span>MB<br>
+          Swap Total: <span id="memoryTotalSwap"></span>MB<br>
+          Swap Used: <span id="memoryUsedSwap"></span>MB<br>
+          Swap Free: <span id="memoryFreeSwap"></span>MB
+        </div>
+      </div>
+      <div id="diskCards" class="largeMetricCard" style>
+      </div>
+    </div>
+    <div id="detailsBodyTraffic" class="paneMiddleContainer">
+      <div id="trafficIp"></div>
+      <div id="trafficBlockedCount"></div>
+      <div id="trafficBlockButton" onclick="blockIp()">B l o c k</div>
+      <div id="trafficBlockButtonHint" onclick="showInfo(blockExplanation)">What's this?</div>
+      <div id="trafficCountry"></div>
+      <div id="trafficStateProv"></div>
+      <div id="trafficCity"></div>
+      <div id="trafficCoordinates"></div>
+      <div id="trafficLocalTime"></div>
+      <div id="trafficPorts"></div>
+      <div id="trafficPorts"></div>
+      <iframe id="trafficMap" 
+        frameborder="0" style="border:0"
+        src="">
+      </iframe>
+    </div> -->
+    <div id="settingsFilters">
+      <span>Show if name contains: </span><input type="text" class="filterInputs" id="nameFilter" name="nameFilter" placeholder="Comma seperated list">
+      <div>and</div>
+      <span>Show if stage contains: </span><input type="text" class="filterInputs" id="stageFilter" name="stageFilter" placeholder="Comma seperated list">
+      <div style="font-size: 13px; color: grey;">(Changes are automatically applied, no need for a submit button)</div>
+    </div>
+    <div id="detailsCloseButton" class="closeButton menuItem" onclick="closeDetailsView()">Close</div>
+  </div>
+
+  <div id="headerLeft" class="header">
+    <span id="appTitle">NOC Visuals</span>
+    <img id="spinning" class="menuItem headerButton" src="images/globe.svg" />
+    <img id="settings" class="menuItem headerButton" src="images/settings.svg" />
+  </div>
+
+  <div id="headerRight" class="header">
+    <span id="billingTotal">--</span>
+    <select id="accountSelector">
+      <option value="667058724754">All Accounts</option>
+      <option value="667058724754">667058724754</option>
+      <option value="8457937484945">8457937484945</option>
+      <option value="5376843236566">5376843236566</option>
+      <option value="1123567656776">1123567656776</option>
+    </select>
+  </div>
+
+  <div id="enhanceFrame">
+    <div></div> <!-- Overlapping creates corner only border -->
+  </div>
+
+  <div id="timeTravelMarker"></div>
+
+</div>
+
+<div id="dataMapContainerLargeWorld" class="dataMapContainerLarge"></div>
+<div id="dataMapContainerLargeUSA" class="dataMapContainerLarge"></div>
+<div id="switchMap">
+  <span id="switchMapWorld" class="active">World</span>
+  <span id="switchMapUSA">United States of America</span>
+</div>
+<div id="closeMap">Close</div>
+
+  <script type="text/javascript" src="js/third-party/three.min.js"></script>
+  <script type="text/javascript" src="js/third-party/d3.v3.min.js"></script>
+  <script type="text/javascript" src="js/third-party/d3.v4.min.js"></script>
+  <script type="text/javascript" src="js/third-party/d3-hexbin.v0.2.min.js"></script>
+  <script type="text/javascript" src="js/third-party/aws-sdk-2.78.0.min.js"></script>
+  <script type="text/javascript" src="js/third-party/topojson.min.js"></script>
+  <script type="text/javascript" src="js/third-party/datamaps.all.min.js"></script> 
+  <script type="text/javascript" src="js/third-party/jquery.min.js"></script>
+  <script type="text/javascript" src="js/third-party/rickshaw.js"></script>
+  <script type="text/javascript" src="js/third-party/circos.js"></script>
+  <script type="text/javascript" src="js/third-party/gunzip.min.js"></script>
+  <script type="text/javascript" src="js/third-party/encoding-indexes.js"></script>
+  <script type="text/javascript" src="js/third-party/encoding.js"></script>
+  <script type="text/javascript" src="js/third-party/annyang.min.js"></script>
+  <script type="text/javascript" src="js/third-party/moment.min.js"></script>
+  <script type="text/javascript" src="js/third-party/moment-timezone.min.js"></script>
+  <script type="text/javascript" src="js/third-party/moment-timezone-with-data-2012-2022.min.js"></script>
+  <!-- <script type="text/javascript" src="js/compressedMain.js"></script> -->
+  <script type="text/javascript" src="js/main.js"></script> 
+  <script type="text/javascript" src="js/shaders.js"></script>
+  <script type="text/javascript" src="js/globalVars.js"></script> 
+  <!-- <script type="text/javascript" src="js/compressed.js"></script>  -->
+   <script type="text/javascript" src="js/aws.js"></script>
+  <script type="text/javascript" src="js/billing.js"></script>
+  <script type="text/javascript" src="js/timeLineData.js"></script>
+  <script type="text/javascript" src="js/elb.js"></script>
+  <script type="text/javascript" src="js/apiGateway.js"></script>
+  <script type="text/javascript" src="js/countryCodes.js"></script>
+  <script type="text/javascript" src="js/inputDataTranslater.js"></script>
+  <script type="text/javascript" src="js/clock.js"></script>
+  <script type="text/javascript" src="js/traffic.js"></script>
+  <script type="text/javascript" src="js/deviceCircleGraphs.js"></script>
+  <script type="text/javascript" src="js/map.js"></script>
+  <script type="text/javascript" src="js/endPointScatterGraphs.js"></script>
+  <script type="text/javascript" src="js/timeLineBarGraph.js"></script>
+  <script type="text/javascript" src="js/scatterCircleGraph.js"></script>
+  <script type="text/javascript" src="js/countryResponseGraphs.js"></script>
+  <script type="text/javascript" src="js/endPointResponseGraphs.js"></script>
+  <script type="text/javascript" src="js/lineGraphs.js"></script>
+  <script type="text/javascript" src="js/centroids.js"></script>  
+  <script type="text/javascript">
+
+  var supportsWebGL = ( function () { 
+    try { 
+      return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); 
+    } catch( e ) { 
+      return false; 
+    } 
+  } )();
+
+    if(!supportsWebGL){
+      alert("Your browser does not support WebGL which is required for this program. Try using the latest version of Google Chrome");
+    } 
+
+      // setInterval(function(){
+      //   console.log("FPS="+frames);
+      //   frames = 0;
+      // },1000);
+
+      document.getElementById("spinning").addEventListener("mousedown", function(){
+       toggleRotate();
+      });
+
+      document.getElementById("settings").addEventListener("mousedown", function(){
+        if(document.getElementById("paneMiddle").className == "pane"){
+          document.getElementById("paneMiddle").className = "pane openPane";
+        }else{
+          closeDetailsView();
+        }
+      });
+
+      document.getElementById("timeLine").addEventListener("mousedown", function(){
+       var val = document.getElementById("timeLine").getElementsByClassName("x_label")[0].innerHTML;
+       val = val.substring(val.indexOf("(")+1, val.indexOf(")"));
+       timeTravel(val);
+      });
+
+      document.getElementById("timeLineLatency").addEventListener("mousedown", function(){
+       var val = document.getElementById("timeLineLatency").getElementsByClassName("x_label")[0].innerHTML;
+       val = val.substring(val.indexOf("(")+1, val.indexOf(")"));
+       timeTravel(val);
+      });
+
+      document.getElementById("dataMapContainer").addEventListener("mousedown", function(){
+          openMap();
+      });
+
+      document.getElementById("closeMap").addEventListener("mousedown", function(){
+          closeMap();
+      });
+
+      document.getElementById("switchMapWorld").addEventListener("mousedown", function(){
+        switchMap("world");
+      });
+
+      document.getElementById("switchMapUSA").addEventListener("mousedown", function(){
+        switchMap("usa");
+      });
+
+      document.getElementById("rangeSimConnections").addEventListener("input", function(e){
+        document.getElementById("rangeSimConnectionsValue").innerHTML = numberWithCommas(parseInt(e.target.value));
+        simConnections = parseInt(e.target.value);
+        paneSimActivity = true;
+      });
+
+      document.getElementById("rangeSimIps").addEventListener("input", function(e){
+        document.getElementById("rangeSimIpsValue").innerHTML = numberWithCommas(parseInt(e.target.value));
+        simUniqueIps = parseInt(e.target.value);
+        paneSimActivity = true;
+      });
+
+      document.getElementById("rangeSimErrors").addEventListener("input", function(e){
+        document.getElementById("rangeSimErrorsValue").innerHTML = numberWithCommas(parseInt(e.target.value));
+        sim4xxPercent = parseInt(e.target.value)/2;
+        sim5xxPercent = parseInt(e.target.value)/2;
+        paneSimActivity = true;
+      });
+
+      document.getElementById("nameFilter").addEventListener("input", function(e){
+        nameFilter = e.target.value;
+      });
+
+      document.getElementById("stageFilter").addEventListener("input", function(e){
+        stageFilter = e.target.value;
+      });
+
+      document.getElementById("paneSimPullDownTab").addEventListener("mousedown", function(){
+        if(document.getElementById("paneSim").className == "pane paneSimHide"){
+          document.getElementById("paneSim").className = "pane paneSimShow";
+        }else {
+          document.getElementById("paneSim").className = "pane paneSimHide";
+        }
+        paneSimActivity = true;
+      });
+
+      document.getElementById("paneSim").addEventListener("mouseover", function(){
+        paneSimActivity = true;
+      });
+
+      //Hide pane sim if user isn't using it
+      setTimeout(function(){ //The first timer has to wait for the app to load and we want to give extra time for the user to see the pane
+        if(simulatorPaneVisible){
+          setInterval(function(){
+            if(!paneSimActivity && document.getElementById("paneSim").className != "pane paneSimHide"){
+              document.getElementById("paneSim").className = "pane paneSimHide";
+            }else{
+              paneSimActivity = false;
+            }
+          },10000);
+        }
+      },10000);
+
+      function openMap(){
+        largeMapVisible = true;
+          slidePanes("out");
+          if(document.getElementById("switchMapWorld").className == "active"){
+            document.getElementById("dataMapContainerLargeWorld").style.display = "block";
+          }else{
+            document.getElementById("dataMapContainerLargeUSA").style.display = "block";
+          }
+
+          if(simulatorOn){
+            document.getElementById("paneSim").style.opacity = "0";
+          }
+
+          document.getElementById("closeMap").style.display = "block";
+          document.getElementById("switchMap").style.display = "block";
+          document.getElementById("container").style.filter = "blur(9px)";
+      }
+
+      function closeMap(){
+        largeMapVisible = false;
+          slidePanes("in");
+          document.getElementById("dataMapContainerLargeWorld").style.display = "none";
+          document.getElementById("dataMapContainerLargeUSA").style.display = "none";
+          document.getElementById("closeMap").style.display = "none";
+          document.getElementById("switchMap").style.display = "none";
+          document.getElementById("container").style.filter = "blur(0px)";
+
+          if(simulatorOn){
+            document.getElementById("paneSim").style.opacity = "1";
+          }
+      }
+
+      function switchMap(map){
+        if(map == "usa"){
+          document.getElementById("switchMapUSA").className = "active";
+          document.getElementById("switchMapWorld").className = "";
+          document.getElementById("dataMapContainerLargeWorld").style.display = "none";
+          document.getElementById("dataMapContainerLargeUSA").style.display = "block";
+        }else if("world"){
+          document.getElementById("switchMapWorld").className = "active";
+          document.getElementById("switchMapUSA").className = "";
+          document.getElementById("dataMapContainerLargeUSA").style.display = "none";
+          document.getElementById("dataMapContainerLargeWorld").style.display = "block";
+        }
+      }
+
+      function zoomToRegion(region){
+        if(movingGlobe){
+          return;
+        }
+        var phi = (90 - parseInt(globe.clouds.aws.regions[region].lat)) * Math.PI / 180;
+        var theta = (180 - parseInt(globe.clouds.aws.regions[region].lon)) * Math.PI / 180;
+
+        var distanceTarget = 1000;
+
+        var x = (distanceTarget * Math.sin(phi) * Math.cos(theta));
+        var y = (distanceTarget * Math.cos(phi));
+        var z = (distanceTarget * Math.sin(phi) * Math.sin(theta));
+
+        movingGlobe = true;
+        globe.setCameraPosition(x, y, z);
+
+        //Give globe time to move
+        setTimeout(function(){
+          movingGlobe = false;
+        }, 5000);
+      }
+
+      function zoomToCountry(country){
+        if(movingGlobe){
+          return;
+        }
+        var phi = (90 - parseInt(centroids[country].lat)) * Math.PI / 180;
+        var theta = (180 - parseInt(centroids[country].lon)) * Math.PI / 180;
+
+        var distanceTarget = 1000;
+
+        var x = (distanceTarget * Math.sin(phi) * Math.cos(theta));
+        var y = (distanceTarget * Math.cos(phi));
+        var z = (distanceTarget * Math.sin(phi) * Math.sin(theta));
+
+        movingGlobe = true;
+        globe.setCameraPosition(x, y, z);
+
+        //Give globe time to move
+        setTimeout(function(){
+          movingGlobe = false;
+        }, 5000);
+      }
+
+      function interpretTimeDictation(input){
+        console.log(input)
+
+        var day, hour, minute;
+        for(var i=0; i<input.length; i++){
+          if(isNaN(parseInt(input.charAt(i)))){
+            if(i == 0){
+              //Invalid input
+              return;
+            }else if(input.charAt(i) == ":"){
+              //Hour seperator
+              hour = input.substring(0, i);
+            }else if(input.charAt(i) == " "){
+              //Time stamp is done
+              if(hour == undefined){
+                if(i == 0){
+                  hour = "0" + input.charAt(0);
+                  minute = "00";
+                }else if(i == 1){
+                  hour = input.charAt(0) + input.charAt(1);
+                  minute = "00";
+                }else if(i == 3){
+                  hour = "0" + input.charAt(0);
+                  minute = input.charAt(1) + input.charAt(2);
+                }else if(i == 4){
+                  hour = input.charAt(0) + input.charAt(1);
+                  minute = input.charAt(2) + input.charAt(3);
+                }
+              }else{
+                minute = input.substring(input.index(":")+1, i);
+              }
+              break;
+            }
+          }
+        }
+
+        if(hour == undefined){
+          if(input.length == 0){
+            return;
+          }else if(input.length == 1){
+            hour = "0" + input;
+            minute = "00";
+          }else if(input.length == 2){
+            hour = input;
+            minute = "00";
+          }else if(input.length == 3){
+            hour = "0" + input.charAt(0);
+            minute = input.charAt(1) + input.charAt(2);
+          }else if(input.length == 4){
+            hour = input.charAt(0) + input.charAt(1);
+            minute = input.charAt(2) + input.charAt(3);
+          }
+        }
+
+        if(minute == undefined){
+          if(input.length >= 3 && input.length <= 5){
+            minute = input.substring(input.length-2, input.length);
+          }else{
+            minute = "00";
+          }
+        }
+
+        console.log(hour+":"+minute);
+
+        var date = new Date();
+        date.setHours(parseInt(hour));
+        date.setMinutes(parseInt(minute));
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+
+        //Future time means user meant yesterday at this time
+        if(date.getTime() > new Date()){
+          date.setDay(date.getDay()-1);
+        }
+
+        console.log(date.toUTCString())
+        timeTravel(date.toUTCString());
+      }
+
+      if (annyang) {
+        var commands = {
+          'map': function() {
+            openMap();
+          },
+          'usa map': function() {
+            switchMap("usa");
+          },
+          'globe': function() {
+            closeMap();
+          },
+          'world map': function() {
+            switchMap("world");
+          },
+          'back': function() {
+            closeMap();
+            globe.zoomReset();
+            startRotation();
+          },
+          'reset': function() {
+            closeMap();
+            globe.zoomReset();
+            startRotation();
+          },
+          'rotate': function() {
+            startRotation();
+          },
+          'stop': function() {
+            stopRotation();
+          },
+          'show *tag': function(tag) {
+             zoomToCountry(tag);
+          },
+          // 'set time to *tag': function(tag) {
+          //   interpretTimeDictation(tag);
+          // },
+          'zoom': function() {
+             globe.enhance();
+          },
+          'zoom in': function() {
+             globe.enhance();
+          },
+          'enhance': function() {
+             globe.enhance();
+          },
+        };
+
+        // Add our commands to annyang
+        annyang.addCommands(commands);
+
+        // Start listening. You can call this here, or attach this call to an event, button, etc.
+        annyang.start();
+      }
+
+      function timeTravel(val){
+        document.getElementById("timeTravelMarker").style.display = "block";
+        document.getElementById("timeTravelMarker").style.left = getCursorX() + "px";
+
+        globe.timeWarpSpinMove();
+        clearLineGraphs();
+        clearCountryGraphs();
+        clearEndPointResponseGraphs();
+        clearMaps();
+        trafficQueue = [];
+        globe.load("traffic", trafficQueue);
+        deviceScatterData = [];
+        drawUpdates();
+        clearScatterCircleGraph();
+        connectionDetailKeys = {};
+        setTimeout(function(){
+          var now = new Date();
+          timeOffset = new Date().getTime() - Date.parse(val);
+          currentTime = new Date(now.getTime() - timeOffset);
+          lastTrafficRefreshTime = 0;
+          lastTrafficQueueClearTime = currentTime;
+          document.getElementById("clockReset").style.display = "block";
+        },1000);
+      }
+
+      function timeReset(){
+        document.getElementById("timeTravelMarker").style.display = "none";
+
+        clearLineGraphs();
+        clearCountryGraphs();
+        clearEndPointResponseGraphs();
+        clearMaps();
+        trafficQueue = [];
+        globe.load("traffic", trafficQueue);
+        drawUpdates();
+        clearScatterCircleGraph();
+        connectionDetailKeys = {};
+        setTimeout(function(){
+          var now = new Date();
+          trafficVisibilitySeconds = 10;
+          timeOffset = 0;
+          currentTime = new Date(now.getTime() - timeOffset);
+          lastTrafficRefreshTime = 0;
+          lastTrafficQueueClearTime = currentTime;
+          document.getElementById("clockReset").style.display = "none";
+        },1000);
+      }
+
+      function getCursorX(){
+        return event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+      }
+
+      //Purge no longer needed keys in connectionDetailKeys
+      setInterval(function(){
+        //1000ms in a second, 60s in a min, 5mins
+        var time = currentTime.getTime() - (1000 * 60 * 5);
+        for(var key in connectionDetailKeys){
+          if(parseInt(key.split("|")[2]) < time){
+            delete connectionDetailKeys[key];
+          }
+        }
+      }, 1000 * 60 * 5);
+
+      function toggleRotate(){
+         if(rotate){
+          stopRotation();
+        }else{
+          startRotation();
+        }
+      }
+
+      function stopRotation(){
+        rotate = false;
+      }
+
+      function startRotation(){
+        rotate = true;
+      }
+
+      function slidePanes(direction){
+        if((slideDirection != direction) && sliding){
+          slidingInterupt = true;
+
+          setTimeout(function(){    
+              slidingInterupt = false;
+              slidePanes(direction);
+          }, 2);
+        }else{
+          slideDirection = direction;
+        }
+
+        sliding = true;
+        var done = true;
+        if(direction == "in"){
+          if(actualSlideWidth < 0){
+            actualSlideWidth += slideSpeed;
+            headerLeft.style.left = actualSlideWidth + "px";
+            paneLeft.style.left = actualSlideWidth + "px";
+            headerRight.style.right = actualSlideWidth + "px";
+            paneRight.style.right = actualSlideWidth + "px";
+            done = false;
+          }
+
+          if(actualSlideHeight < 0){
+            actualSlideHeight += slideSpeed;
+            paneTop.style.top = actualSlideHeight + "px";
+            done = false;
+          }
+        }else{
+          if(actualSlideWidth > slideWidth){
+            actualSlideWidth -= slideSpeed;
+            headerLeft.style.left = actualSlideWidth + "px";
+            paneLeft.style.left = actualSlideWidth + "px";
+            headerRight.style.right = actualSlideWidth + "px";
+            paneRight.style.right = actualSlideWidth + "px";
+            done = false;
+          }
+
+          if(actualSlideHeight > slideHeight){
+            actualSlideHeight -= slideSpeed;
+            paneTop.style.top = actualSlideHeight + "px";
+            done = false;
+          }
+        }
+
+        setTimeout(function(){
+            if(!done && !slidingInterupt){
+              slidePanes(direction);
+            }else{
+              sliding = false;
+            }
+          }, 1);
+      }
+
+      function showInfo(info){
+        document.getElementById("paneInfo").innerHTML = '<p>"'+info+'</p>'+
+        '<div id="infoCloseButton" onclick="closeInfo()" class="closeButton menuItem">Close</div>';
+        document.getElementById("paneInfo").style.display = "block";
+      }
+
+      function closeInfo(){
+        document.getElementById("paneInfo").style.display = "none";
+      }
+
+      function closeDetailsView(){
+        document.getElementById("paneMiddle").className = "pane closePane";
+        setTimeout(function(){
+          document.getElementById("paneMiddle").className = "pane";
+        },250);
+      }
+
+      function getPosition(string, subString, index) {
+        return string.split(subString, index).join(subString).length;
+      }
+
+      function showTimeLine(){
+         document.getElementById("timeLine").style.opacity = "0.75";
+      }
+
+      function hideTimeLine(){
+         document.getElementById("timeLine").style.opacity = "0";
+      }
+
+      function toggleTimeLine(){
+        if(document.getElementById("timeLine").style.opacity == "0"){
+          showTimeLine();
+        }else{
+          hideTimeLine();
+        }
+      }
+
+      function numberWithCommas(x) {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      function isDeviceFilteredOut(value){
+        //Filter is set to the default
+        if((nameFilter.trim() == "" || nameFilter.trim() == "*") && (stageFilter.trim() == "" || stageFilter.trim() == "*")){
+          return false;
+        }
+
+        var id = value.substring(0, value.indexOf("/"));
+        var name = inventory["apigateway"][value].name.toLowerCase();
+        var stage = value.substring(value.indexOf("/")+1, value.length).toLowerCase();
+        var foundInFilter = false;
+
+        //There is a name filter in place
+        if(nameFilter.trim() != "" && nameFilter.trim() != "*"){
+          var names = nameFilter.trim().split(",");
+          for(var i=0; i<names.length; i++){
+            console.log(names[i].toLowerCase())
+            if(name.indexOf(names[i].toLowerCase()) != -1){
+              foundInFilter = true;
+              break;
+            }
+          }
+
+          if(!foundInFilter){
+            return true;
+          }
+        }
+
+
+        foundInFilter = false;
+
+        //There is a stage filter in place
+        if(stageFilter.trim() != "" && stageFilter.trim() != "*"){
+          var stages = stageFilter.trim().split(",");
+          for(var k=0; k<stages.length; k++){
+            if(stage.indexOf(stages[k].toLowerCase()) != -1){
+              foundInFilter = true;
+              break;
+            }
+          }
+
+          if(!foundInFilter){
+            return true;
+          }
+        }
+
+        //Was not filtered out
+        return false;
+      }
+
+      function round(value, step) {
+        step || (step = 1.0);
+        var inv = 1.0 / step;
+        return Math.round(value * inv) / inv;
+    }
+
+    function updateOverallStatus(status){
+      overallStatus = status;
+      if(status == "success"){
+        document.getElementById("paneTop").style.backgroundColor = "rgba(0, 173, 239,0.6)";
+        document.getElementById("paneTop").style.boxShadow = "0px 0px 23px 5px #00adef";
+        document.getElementById("statusBarTop").style.backgroundColor = "rgba(0, 173, 239,0.6)";
+        document.getElementById("statusBarTop").style.boxShadow = "0px 0px 23px 5px #00adef";
+        document.getElementById("clock").style.color = "#000000";
+      }else if(status == "rejected"){
+        new Audio("sounds/failure_rate_exceeded.mp3").play();
+        document.getElementById("paneTop").style.backgroundColor = "rgba(177, 87, 5,0.6)";
+        document.getElementById("paneTop").style.boxShadow = "0px 0px 23px 5px "+color4xx;
+        document.getElementById("statusBarTop").style.backgroundColor = "rgba(177, 87, 5,0.6)";
+        document.getElementById("statusBarTop").style.boxShadow = "0px 0px 23px 5px "+color4xx;
+        document.getElementById("clock").style.color = "#ffffff";
+      }else if(status == "error"){
+        new Audio("sounds/failure_rate_exceeded.mp3").play();
+        document.getElementById("paneTop").style.backgroundColor = "rgba(256,0,0,0.6)";
+        document.getElementById("paneTop").style.boxShadow = "0px 0px 23px 5px "+color5xx;
+        document.getElementById("statusBarTop").style.backgroundColor = "rgba(256,0,0,0.6)";
+        document.getElementById("statusBarTop").style.boxShadow = "0px 0px 23px 5px "+color5xx;
+        document.getElementById("clock").style.color = "#ffffff";
+      }
+    }
+
+      function encodeCountryName(name){
+        return name.replace(/ /g, '_');
+      }
+
+      function decodeCountryName(name){
+        return name.replace(/_/g, ' ');
+      }
+
+      function encodeEndPointName(name){
+        var stage = name.substring(name.lastIndexOf("/")+1, name.length);
+        return (inventory["apigateway"][name].name + "--S--" + stage + "--E--").replace(/ /g, '--_--');
+      }
+
+      function decodeEndPointName(name){
+        return name.replace(/--_--/g, ' ').replace(/--S--/g, ' (').replace(/--E--/g, ')');
+      } 
+
+      function drawUpdates(){
+        var connections = 0;
+        var mobile = 0;
+        var tablet = 0;
+        var desktop = 0;
+        var responseCode123 = 0;
+        var responseCode4xx = 0;
+        var responseCode5xx = 0;
+        var responseTotal = 0;
+        var mapData = {};
+        var mapDataArray = [];
+        var mapDataUSA = {};
+        var mapDataArrayUSA = [];
+        var countryIso3 = null;
+        var countryName = null;
+        var countryNameEncoded = null;
+        var stateIso2 = null;
+        var stateName = null;
+        var ipList = {};
+        var endPointName = null;
+        countryResponseUpdatedObjects = {};
+        endPointResponseUpdatedObjects = {};
+
+        if(simulatorOn){
+          document.getElementById("paneSim").style.display = "block";
+          runTrafficSim();
+        }
+
+        //Push events to globe
+        globe.load("traffic", trafficQueue);
+
+        //Inventory objects
+        for(var n=0; n<trafficQueue.length; n++){
+          endPointName = encodeEndPointName(trafficQueue[n].id);
+          //Connections
+          for(var m=0; m<trafficQueue[n].connections.length; m++){
+            //Details
+            for(var j=0; j<trafficQueue[n].connections[m].details.length; j++){
+              if(j == 0 && ipList[trafficQueue[n].connections[m].ip] == undefined){
+                ipList[trafficQueue[n].connections[m].ip] = {};
+              }
+              connections++;
+              countryIso3 = iso2iso3[trafficQueue[n].connections[m].country];
+              countryName = iso2CountryName[trafficQueue[n].connections[m].country];
+              countryNameEncoded = encodeCountryName(countryName); //This helps with html IDs
+
+
+              if(countryResponseUpdatedObjects[countryNameEncoded] == undefined){
+                countryResponseUpdatedObjects[countryNameEncoded] = {};
+                countryResponseUpdatedObjects[countryNameEncoded].ipList = {};
+                countryResponseUpdatedObjects[countryNameEncoded]["123"] = 0;
+                countryResponseUpdatedObjects[countryNameEncoded]["4xx"] = 0;
+                countryResponseUpdatedObjects[countryNameEncoded]["5xx"] = 0;
+              }
+
+              if(countryResponseUpdatedObjects[countryNameEncoded].ipList[trafficQueue[n].connections[m].ip] == undefined){
+                countryResponseUpdatedObjects[countryNameEncoded].ipList[trafficQueue[n].connections[m].ip] = {};
+              }
+
+              if(endPointResponseUpdatedObjects[endPointName] == undefined){
+                endPointResponseUpdatedObjects[endPointName] = {};
+                endPointResponseUpdatedObjects[endPointName].region = inventory["apigateway"][trafficQueue[n].id].Region;
+                endPointResponseUpdatedObjects[endPointName].ipList = {};
+                endPointResponseUpdatedObjects[endPointName]["123"] = 0;
+                endPointResponseUpdatedObjects[endPointName]["4xx"] = 0;
+                endPointResponseUpdatedObjects[endPointName]["5xx"] = 0;
+                endPointResponseUpdatedObjects[endPointName]["response"] = 0;
+                endPointResponseUpdatedObjects[endPointName]["responseCount"] = 0;
+              }
+
+              if(endPointResponseUpdatedObjects[endPointName].ipList[trafficQueue[n].connections[m].ip] == undefined){
+                endPointResponseUpdatedObjects[endPointName].ipList[trafficQueue[n].connections[m].ip] = {};
+              }
+
+              if(mapData[countryIso3] == undefined){
+                mapData[countryIso3] = 0;
+              }
+
+              if(countryIso3 == "USA"){
+                stateName = trafficQueue[n].connections[m].stateRegion;
+                stateIso2 = USState2iso[stateName];
+
+                if(mapDataUSA[stateIso2] == undefined){
+                  mapDataUSA[stateIso2] = 0;
+                }
+
+                mapDataUSA[stateIso2] ++;
+              }
+
+              mapData[countryIso3] ++;
+
+              if(trafficQueue[n].connections[m].details[j].mobile == "true"){
+                mobile++;
+              }
+              if(trafficQueue[n].connections[m].details[j].tablet == "true"){
+                tablet++;
+              }
+              if(trafficQueue[n].connections[m].details[j].desktop == "true"){
+                desktop++;
+              }
+
+              if(trafficQueue[n].connections[m].details[j].responseCode.charAt(0) == "1" ||
+                trafficQueue[n].connections[m].details[j].responseCode.charAt(0) == "2" ||
+                trafficQueue[n].connections[m].details[j].responseCode.charAt(0) == "3"){
+                responseCode123++;
+                countryResponseUpdatedObjects[countryNameEncoded]["123"]++;
+                endPointResponseUpdatedObjects[endPointName]["123"]++;
+              }else if(trafficQueue[n].connections[m].details[j].responseCode.charAt(0) == "4"){
+                responseCode4xx++;
+                countryResponseUpdatedObjects[countryNameEncoded]["4xx"]++;
+                endPointResponseUpdatedObjects[endPointName]["4xx"]++;
+              }else if(trafficQueue[n].connections[m].details[j].responseCode.charAt(0) == "5"){
+                responseCode5xx++;
+                countryResponseUpdatedObjects[countryNameEncoded]["5xx"]++;
+                endPointResponseUpdatedObjects[endPointName]["5xx"]++;
+              }
+              
+              if(trafficQueue[n].connections[m].details[j].start != undefined &&
+                trafficQueue[n].connections[m].details[j].end != undefined){
+                  responseTotal++;
+                  
+                  var responseTime = trafficQueue[n].connections[m].details[j].end - trafficQueue[n].connections[m].details[j].start;
+                  
+                  endPointResponseUpdatedObjects[endPointName]["response"] += responseTime;
+                  endPointResponseUpdatedObjects[endPointName]["responseCount"]++;
+
+                  if(!trafficQueue[n].connections[m].details[j].processed){
+                    pushScatterCircleGraphData(trafficQueue[n].id, responseTime, parseInt(trafficQueue[n].connections[m].details[j].responseCode.charAt(0)));
+                  }
+                }
+            }
+          }
+        }
+
+        showTraffic();
+        drawLineGraphAnimations(connections, Object.keys(ipList).length, responseCode123, responseCode4xx, responseCode5xx);
+
+        for(var country in mapData){
+          mapDataArray.push([country,mapData[country]]);
+        }
+
+        for(var state in mapDataUSA){
+          mapDataArrayUSA.push([state,mapDataUSA[state]]);
+        }
+
+        setTimeout(function(){
+          drawMapLarge(mapDataArray, "world");
+          drawMapLarge(mapDataArrayUSA, "usa");
+          
+          if(!largeMapVisible){
+            drawMap(mapDataArray);
+          }
+        },200);
+
+        setTimeout(function(){
+          if(connections > 0){
+            drawDeviceCircleGraphAnimations(mobile/connections, tablet/connections, desktop/connections);
+          }else{
+            drawDeviceCircleGraphAnimations(0, 0, 0);
+          }
+        },400);
+
+        setTimeout(function(){
+          drawCountryResponseGraphAnimations();
+        },600);
+
+        setTimeout(function(){
+          drawScatterCircleGraph();
+        },800);
+        
+        setTimeout(function(){
+          drawEndPointResponseGraphAnimations();
+        },1000);
+        
+
+        if(responseCode4xx/responseTotal * 100 > criticalErrorRate){
+          if(responseCode5xx < responseCode4xx){
+            if(overallStatus != "rejected"){ 
+              updateOverallStatus("rejected");
+            }
+          }else{
+            if(overallStatus != "error"){ 
+              updateOverallStatus("error");
+            }
+          }
+        }else if(responseCode5xx/responseTotal * 100 > criticalErrorRate){
+          if(overallStatus != "error"){ 
+            updateOverallStatus("error");
+          }
+        }else{
+          if(overallStatus != "success"){ 
+            updateOverallStatus("success");
+          }
+        }
+        trafficQueue = [];
+      }
+
+      function getLogs(){
+        // getElbLogs('my-elb-logging-bucket', '334102510601', '', loginRegion, new Date(currentTime));
+        getApiGatewayLogs(new Date(currentTime));
+      }
+
+    new Audio("./sounds/backgroud.mp3").play();
+
+      //Simulate login
+      setTimeout(function(){
+        simulateLogin(80, "administrator", "username", function(){
+          simulateLogin(80, "12345678901234567890", "password");
+        });
+      }, 500);
+
+
+      function simulateLogin(time, message, field, callback){
+        setTimeout(function(){
+          
+          document.getElementById(field).value += message.charAt(document.getElementById(field).value.length);
+
+          if(document.getElementById(field).value.length != message.length){
+            simulateLogin(time, message, field, callback)
+          }else{
+            callback()
+          }
+        }, time)
+      }
+
+    if(simulatorOn){
+      var simData = {"1.0.0.0":"1.0.0.0,1.0.0.255,AU,Queensland,Brisbane,\"South Brisbane\",4101,-27.4748,153.017,2207259,10,Australia/Brisbane,APNIC-LABS,,","1.0.0.102":"1.0.0.0,1.0.0.255,AU,Queensland,Brisbane,\"South Brisbane\",4101,-27.4748,153.017,2207259,10,Australia/Brisbane,APNIC-LABS,,","1.0.0.255":"1.0.0.0,1.0.0.255,AU,Queensland,Brisbane,\"South Brisbane\",4101,-27.4748,153.017,2207259,10,Australia/Brisbane,APNIC-LABS,,","1.0.2.0":"1.0.16.0,1.0.31.255,JP,Tokyo,Shinjuku,\"Shinjuku (16)\",,35.6978,139.706,1852083,9,Asia/Tokyo,i2ts,,\"I2ts, inc.\"","1.0.4.77":"1.0.32.0,1.0.63.255,CN,Guangdong,,Guangzhou,,23.1322,113.267,1809858,8,Asia/Shanghai,CHINANET-GD,,","1.0.15.255":"1.0.1.0,1.0.3.255,CN,Fujian,,Fuzhou,,26.1008,119.295,1810821,8,Asia/Shanghai,CHINANET-FJ,,","1.0.30.0":"1.0.16.0,1.0.31.255,JP,Tokyo,Shinjuku,\"Shinjuku (16)\",,35.6978,139.706,1852083,9,Asia/Tokyo,i2ts,,\"I2ts, inc.\"","1.0.100.100":"1.0.1.0,1.0.3.255,CN,Fujian,,Fuzhou,,26.1008,119.295,1810821,8,Asia/Shanghai,CHINANET-FJ,,","1.0.255.255":"1.0.16.0,1.0.31.255,JP,Tokyo,Shinjuku,\"Shinjuku (16)\",,35.6978,139.706,1852083,9,Asia/Tokyo,i2ts,,\"I2ts, inc.\"","1.1.0.1":"1.1.0.0,1.1.0.255,CN,Fujian,,Fuzhou,,26.1008,119.295,1810821,8,Asia/Shanghai,CHINANET-FJ,,","1.1.1.1":"1.1.1.0,1.1.1.255,AU,Queensland,Brisbane,\"South Brisbane\",4101,-27.4748,153.017,2207259,10,Australia/Brisbane,APNIC-LABS,,","1.1.3.4":"1.1.2.0,1.1.7.255,CN,Fujian,,Fuzhou,,26.1008,119.295,1810821,8,Asia/Shanghai,CHINANET-FJ,,","2.1.8.55":"2.1.251.0,2.2.3.255,FR,Île-de-France,Hauts-de-Seine,Issy-les-Moulineaux,92130,48.8311,2.26625,3012649,2,Europe/Paris,\"France Telecom Orange\",dsl,","2.1.60.12":"2.1.251.0,2.2.3.255,FR,Île-de-France,Hauts-de-Seine,Issy-les-Moulineaux,92130,48.8311,2.26625,3012649,2,Europe/Paris,\"France Telecom Orange\",dsl,","2.1.65.102":"2.1.251.0,2.2.3.255,FR,Île-de-France,Hauts-de-Seine,Issy-les-Moulineaux,92130,48.8311,2.26625,3012649,2,Europe/Paris,\"France Telecom Orange\",dsl,","3.1.113.0":"3.0.0.0,3.255.255.255,US,Connecticut,\"Fairfield County\",Fairfield,06828,41.2162,-73.2526,4834157,-4,America/New_York,\"General Electric Company\",,\"General Electric Company\"","3.1.114.255":"3.0.0.0,3.255.255.255,US,Connecticut,\"Fairfield County\",Fairfield,06828,41.2162,-73.2526,4834157,-4,America/New_York,\"General Electric Company\",,\"General Electric Company\"","3.1.115.205":"3.0.0.0,3.255.255.255,US,Connecticut,\"Fairfield County\",Fairfield,06828,41.2162,-73.2526,4834157,-4,America/New_York,\"General Electric Company\",,\"General Electric Company\"","3.1.115.255":"3.0.0.0,3.255.255.255,US,Connecticut,\"Fairfield County\",Fairfield,06828,41.2162,-73.2526,4834157,-4,America/New_York,\"General Electric Company\",,\"General Electric Company\"","4.1.126.12":"4.1.1.0,4.1.1.255,US,Tennessee,\"Davidson County\",Nashville,37222,36.1627,-86.7816,4644585,-5,America/Chicago,\"Level 3 Communications\",,\"Level 3 Communications, Inc.\"","5.1.128.88":"5.1.0.0,5.1.31.255,UA,\"Kyiv City\",\"Kyiv City\",\"Kiev (Solom'yans'kyi district)\",,50.4511,30.4454,703448,3,Europe/Kiev,\"Pjsc Datagroup\",,\"Pjsc Datagroup\"","5.2.0.2":"5.2.0.0,5.2.7.255,IT,Lazio,Rome,Rome,00187,41.9028,12.4964,3169070,2,Europe/Rome,\"Linkem Spa WiMAX Network\",wireless,","5.2.2.13":"5.2.192.0,5.2.199.255,RO,Cluj,\"Municipiul Cluj-Napoca\",Cluj-Napoca,,46.7772,23.5999,681290,3,Europe/Bucharest,RCS-RDS,,","5.2.3.4":"5.2.252.0,5.2.255.255,RO,Bucureşti,\"Municipiul Bucureşti\",Bucharest,,44.4325,26.1039,683506,3,Europe/Bucharest,RCS-RDS,,","5.2.4.88":"5.2.252.0,5.2.255.255,RO,Bucureşti,\"Municipiul Bucureşti\",Bucharest,,44.4325,26.1039,683506,3,Europe/Bucharest,RCS-RDS,,","5.2.5.97":"5.2.252.0,5.2.255.255,RO,Bucureşti,\"Municipiul Bucureşti\",Bucharest,,44.4325,26.1039,683506,3,Europe/Bucharest,RCS-RDS,,"};
+
+      addIpsFromDBtoMap(simData);
+
+      setTimeout(function(){
+        new Audio("./sounds/Tick-DeepFrozenApps-397275646.mp3").play();
+        loginAndLoadInventory();
+        apiGatewayInventoryQueue = {
+          "e9ivsa3tla":{"id":"e9ivsa3tla","name":"Public Site East","description":"Created by AWS Lambda","region":"us-east-1","type":"apigateway","cloud":"aws","stages":["prod","test"]},
+          "h55xjslcwj":{"id":"h55xjslcwj","name":"Public Site West","region":"us-west-1","type":"apigateway","cloud":"aws","stages":["prod"]}
+        }
+        loadApiGatewayInventory();
+
+        //Time line
+    var x123 = 1000;
+    var x4 = 50;
+    var x5 = 50;
+    var latency = 1000;
+    var direction = 1;
+    for(var time in timeLineQueue){
+      if(Math.random() > 0.5){
+        direction = 1;
+      }else{
+        direction = -1;
+      }
+
+      latency += (direction * (Math.random() * 300));
+      x123 += (direction * (Math.round(Math.random() * 250)));
+      x4 += (direction * (Math.round(Math.random() * 10)));
+      x5 += (direction * (Math.round(Math.random() * 10)));
+
+      if(latency<0){latency=0};
+      if(x123<0){x123=0};
+      if(x4<0){x4=0};
+      if(x5<0){x5=0};
+
+      if(Math.random() < 0.1){
+        timeLineQueue[time]["Latency"] = latency + (Math.random() * 2000);
+        timeLineQueue[time]["123xx"] = Math.round(Math.random() * 2000);
+        timeLineQueue[time]["4xx"] = Math.round(Math.random() * 2000);
+        timeLineQueue[time]["5xx"] = Math.round(Math.random() * 2000);
+      }else{
+        timeLineQueue[time]["Latency"] = latency;
+        timeLineQueue[time]["123xx"] = x123;
+        timeLineQueue[time]["4xx"] = x4;
+        timeLineQueue[time]["5xx"] = x5;
+      }
+    }
+
+    timeLineCallBackCount = 4;
+    drawTimeLineGraph();
+
+        runTrafficSim();
+      },5000);
+    }else{
+      authenticate("ryan", "X123X");
+    }
+
+    document.getElementById("dataMapContainerLargeWorld").style.display = "none";
+    document.getElementById("dataMapContainerLargeUSA").style.display = "none";
+    document.getElementById("dataMapContainerLargeWorld").style.opacity = "1";
+    document.getElementById("dataMapContainerLargeUSA").style.opacity = "1";
+
+    function runTrafficSim(){
+      var simInventoryArray = ["e9ivsa3tla/prod","h55xjslcwj/prod","e9ivsa3tla/test"];
+      trafficQueue = [];
+          var totalCount, effectiveConnections, max, id, ip, val, locationData, device, mobile, desktop, tablet, responseCode, responseTime;
+          totalCount = 0;
+          effectiveConnections = Math.floor(Math.random() * (simConnections - simConnections/2 + 1)) + simConnections/2; //Add some randomness
+          max = effectiveConnections;
+
+          if(simUniqueIps > max){
+            max = simUniqueIps;
+          }
+
+          for(var i=0; i<effectiveConnections; i++){
+            //Device type
+            device = Math.round(Math.random() * 3);
+            mobile = "false";
+            tablet = "false";
+            desktop = "false";
+            if(device == 0){
+              mobile = "true";
+            }else if(device == 1){
+              tablet = "true";
+            }else{
+              desktop = "true";
+            }
+
+            //Response Code
+            responseCode = Math.round(Math.random() * 100);
+            if(responseCode < sim4xxPercent){
+              responseCode = "400";
+            }else if(responseCode >= sim5xxPercent && responseCode <= (sim4xxPercent+sim5xxPercent)){
+              responseCode = "500";
+            }else{
+              responseCode = "200";
+            }
+
+            id = simInventoryArray[Math.floor(Math.random() * 3)];
+            if(isDeviceFilteredOut(id)){
+              continue;
+            }
+            ip = testOnly[Math.round(Math.random() * 23)];
+            locationData = ipMappings[ip];
+            val = {"type":"apiGateway","id":id,"connections":[{"ip":ip,"details":[],"lat":locationData.lat,"lon":locationData.lon,"country":locationData.country,"stateRegion":locationData.stateRegion,"city":locationData.city}],"responses":[]};
+            
+            var connectionsPerIp = simConnections/simUniqueIps;
+            if(connectionsPerIp < 1){connectionsPerIp=1;}
+            for(var k=0; k<connectionsPerIp; k++){
+              if(totalCount >= max){
+                break;
+              }
+
+              if(Math.random() < 0.4){
+                responseTime = Math.round(Math.random() * 3000);
+              }else{
+                responseTime = Math.round(Math.random() * 1200);
+              }
+
+              totalCount++;
+              pushScatterCircleGraphData(id, responseTime, parseInt(responseCode.charAt(0)));
+              val.connections[0].details.push({"id":"0e2db2d8-70ca-11e7-9d94-ff79edaf6365","start":(new Date().getTime() - responseTime),"ip":ip,"port":"443","tablet":tablet,"mobile":mobile,"smartTV":"false","language":"en-US","desktop":desktop,"userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36","responseCode":responseCode,"end":(new Date().getTime()),"processed":true});
+            }
+
+            trafficQueue.push(val);
+
+            if(totalCount >= max){
+              break;
+            }
+          }
+    }
+
+  </script>
+
+  </body>
+
+</html>

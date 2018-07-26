@@ -1,0 +1,1526 @@
+html {
+    height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: #000000 url(../images/loading.gif) center center no-repeat;
+    color: #ffffff;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 17px;
+    line-height: 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+div, span, p, td, input {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+#info {
+
+    font-size: 13px;
+    position: absolute;
+    bottom: 5px;
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 3px;
+    right: 10px;
+    padding: 10px;
+
+}
+
+#paneLeft {
+    left: 0px;
+    top: 79px;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-image:
+    linear-gradient(to right, rgba(1, 96, 132,0.6), rgba(0, 256, 256,0.4)) 1 0%;
+    border-radius: 0 0 7px 0;
+}
+
+#paneRight {
+    right: 0px;
+    top: 79px;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-image:
+    linear-gradient(to left, rgba(1, 96, 132,0.6), rgba(0, 256, 256,0.4)) 1 0%;
+    border-radius: 0 0 0 7px;
+}
+
+#paneMiddle {
+    left: 0;
+    right: 0;
+    top: 79px;
+    height: 0;
+    width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 9px;
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.9);
+    text-align: center;
+}
+
+#y_axis {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 40px;
+}
+
+#paneInfo {
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 300px;
+    width: 500px;
+    margin: auto;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(0, 256, 256,0.2);
+    border-radius: 0;
+    overflow-y: auto;
+    opacity: 1;
+    background-color: rgba(0,0,0,0.9);
+    display: none;
+}
+
+.paneMiddleContainer{
+    width: 100%;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+#trafficBlockedCount {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    width: initial !important;
+    margin: 10px 20px;
+}
+
+#trafficBlockButton {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    width: initial !important;
+    margin: 10px 20px;
+    color: white;
+    background-color: rgb(150, 0, 0);
+    padding: 7px;
+    cursor: pointer;
+}
+
+#trafficBlockButton:hover {
+    background-color: rgb(80,0,0);
+}
+
+#trafficBlockButtonHint {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: initial !important;
+    margin: 10px 14px;
+    color: white;
+    padding: 7px;
+    font-size: 70%;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#trafficIp {
+    margin-bottom: 15px;
+}
+
+.pane {
+    width: 420px;
+    position: absolute;
+    background-color: transparent;
+    box-shadow: 0px 0px 21px 1px #000000;
+    height: 74%;
+    overflow: hidden;
+}
+
+.openPane {
+    visibility: visible !important;
+    transition: 1s height !important;
+    transition-timing-function: ease-in !important;
+    height: 70% !important;
+}
+
+.closePane {
+    visibility: visible !important;
+    transition: 0.4s height !important;
+    height: 0 !important;
+}
+
+a {
+    color: #aaa;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.bull {
+    padding: 0 5px;
+    color: #555;
+}
+
+#headerLeft {
+    left: 0px;
+    color: #00ADEF;
+    border-radius: 0 7px 0 0;
+    position: relative; 
+}
+
+#headerRight {
+    right: 0px;
+    display: flex;
+    border-radius: 7px 0 0 0;
+}
+
+.header {
+    position: absolute;
+    top: 35px;
+    width: 400px;
+    background-color: transparent;
+    box-shadow: 0px 0px 21px 1px #000000;
+    font-size: 26px;
+    height: 23px;
+    padding: 10px;
+}
+
+select {
+    background-color: transparent;
+    color: white;
+}
+
+select option {
+    background-color: black;
+    color: white;
+}
+
+.menuItem {
+    font-size: 18px;
+    line-height: 26px;
+    height: 30px;
+    float: left;
+    width: 90px;
+    color: #fff;
+
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+}
+
+.submenuItem {
+    font-size: 14px;
+    margin-right: 16px;
+    color: rgba(256, 256, 256, 0.6);
+    float: left;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+}
+
+.menuItem:hover, .menuItem.active {
+    color: #00adef;
+    background-color: rgba(0,103,169,0.1);
+}
+
+.submenuItem:hover, .submenuItem.active {
+    color: #fff;
+    border: 1px solid rgb(0,103,169);
+    border-radius: 4px;
+    padding: 0px 5px;
+}
+.selectedMenuItem {
+    font-size: 20px;
+    color: #fff;
+}
+
+#accountSelector {
+    flex: 1;
+}
+
+#headerRight .menuItem {
+    width: 29%;
+}
+
+.filterInput {
+    background-color: black;
+    border: 1px solid;
+    border-radius: 6px;
+    text-indent: 5px;
+    width: 99%;
+    color: white;
+    margin: 10px 0;
+    opacity: 0.6;
+}
+
+#paneLeft .paneContentTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 102px;
+    overflow: hidden;
+}
+
+#paneRight .paneContentTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 120px;
+    overflow: hidden;
+}
+
+.warnText {
+    font-weight: bold;
+    color: rgb(256,256,0);
+}
+
+.severeWarnText {
+    font-weight: bold;
+    color: rgb(256, 102, 0);
+}
+
+.alertText {
+    font-weight: bold;
+    color: rgb(256,0,0);
+}
+
+.successText {
+    font-weight: bold;
+    color: rgb(0,256,256);
+}
+
+#events {
+    font-size: 13px;
+    overflow: hidden;
+    position: relative;
+}
+
+.panelList div {
+    cursor: pointer;
+}
+
+.panelList div:hover {
+    border: 1px solid #0040ff;
+    border-radius: 4px;
+}
+
+#events div {
+    cursor: pointer;
+}
+
+#events div:hover {
+    border: 1px solid #0040ff;
+    border-radius: 4px;
+}
+
+#paneTop {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0px !important;
+    border-radius: 0 0 9px 9px;
+    width: 330px;
+    text-align: center;
+    height: 19px;
+    padding: 5px 56px 4px 56px;
+    border: none;
+    font-family: monospace;
+    z-index: 2;
+    background-color: rgba(0, 173, 239,0.6);
+    box-shadow: 0px 0px 23px 5px #00adef;
+}
+
+#statusBarTop {
+    top: 0px !important;
+    width: 100%;
+    height: 2px;
+    padding: 0;
+    z-index: 2;
+    background-color: rgba(0, 173, 239,0.6);
+    box-shadow: 0px 0px 14px 3px #00adef;
+}
+
+#paneSim {
+    right: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0px;
+    border-radius: 0 0 7px 7px;
+    color: #00adef;
+    width: 409px;
+    text-align: center;
+    height: 82px;
+    padding: 2px 5px 5px 5px;
+    border: none;
+    font-family: monospace;
+    background-color: rgb(150,150,150);
+    box-shadow: none;
+    z-index: 20;
+    color: black;
+    font-size: 13px;
+    overflow: visible;
+    display: none;
+}
+
+.paneSimShow {
+    transition-property: transform;
+    transition-duration: 1s;
+    animation-name: paneSimSlideDown;
+    animation-duration: 200ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    top: 0px;
+}
+
+.paneSimHide {
+     transition-property: transform;
+    transition-duration: 1s;
+    animation-name: paneSimSlideUp;
+    animation-duration: 200ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;  
+    top: -89px !important;
+}
+
+@keyframes paneSimSlideUp {
+    from {top: 0px;}
+    to {top: -89px;}
+}
+
+@keyframes paneSimSlideDown {
+    from {top: -89px;}
+    to {top: 0px;}
+}
+
+#paneSimPullDownTab {
+    position: absolute;
+    bottom: -15px;
+    height: 15px;
+    width: 50px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: grey;
+    right: 0;
+    border-radius: 0 0 7px 7px;
+}
+
+#paneSimPullDownTab span {
+    font-size: 29px;
+    position: relative;
+    bottom: 12px;
+    cursor: pointer;
+}
+
+#paneTop > div {
+    flex: 1;
+    font-size: 16px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#paneTop p {
+    margin: -5px 0 0 0;
+    color: #ffffff;
+}
+
+#costAverageContainer {
+    position: absolute;
+    left:15px;
+}
+
+#costCurrentContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#costForcastContainer {
+    position: absolute;
+    right:15px;
+}
+
+#objectDetailsLeft {
+    flex: 1;
+}
+
+#objectDetailsRight {
+    flex: 1.5;
+}
+
+#objectDetailsType {
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.smallMetricCard {
+    transform: rotateY(-180deg);
+    backface-visibility: hidden;
+    width: 100%;
+    height: 60px;
+    padding-bottom: 9px;
+}
+
+.largeMetricCard {
+    width: 28%;
+    padding: 15px 0px 5px 0px;
+    height: 250px;
+    transform: rotateY(-180deg);
+    backface-visibility: hidden;
+}
+
+#diskCards {
+    transform: none;
+    backface-visibility: visible;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: initial;
+    min-width: 321px;
+}
+
+.flip {
+    transition: 1s;
+	transform-style: preserve-3d;
+    transform: rotateY(0deg) !important;
+}
+
+.canvasMessageOverlay {
+    font-weight: bold;
+    margin-left: 57px;
+    margin-top: -83px;
+}
+
+.canvasMessage {
+    width: 100%;
+    margin-top: 41px;
+    padding-left: 16px;
+    font-size: 15px;
+}
+
+#detailsHeaderMetrics {
+    width: 100%;
+    height: 75px;
+}
+
+#statusAndHealthContainer {
+    float: right;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.smallMetricCard .canvasMessageOverlay {
+    margin-left: 24px;
+    margin-top: -44px;
+}
+
+.smallMetricCard .canvasMessage {
+    left: 71px;
+    position: absolute;
+    top: 10px;
+    margin: 0;
+}
+
+.closeButton {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding-top: 4px;
+    left: 0;
+    text-align: center;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: rgba(0, 256, 256,0.2);
+}
+
+#trafficMap {
+    margin-top: 30px;
+    width: 100%;
+    height: 70%;
+}
+
+#detailsBodyTraffic {
+    display: block;
+    height: 100%;
+}
+
+#mainOverlays{
+    visibility: hidden;
+    height: 0;
+}
+
+#loginOverlay {
+    width: 300px;
+    height: 100px;
+    padding: 20px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    margin: -70px 0 0 -170px;
+}
+
+.loginInput {
+    background-color: transparent;
+    width: 100%;
+    border-color: rgba(256, 256, 256, 0.3);
+    padding: 7px;
+    margin-top: 6px;
+    color: white;
+    border-style: solid;
+}
+
+#enhanceFrame {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 50%;
+    width: 50%;
+    overflow: hidden;
+    margin: auto;
+    border: 1px solid transparent;
+    background-color: transparent;
+    display: none;
+}
+
+#enhanceFrame div {
+    position: relative;
+    top: -2px;
+    left: -2px;
+    padding: 1px;
+    border: solid white 2px;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 30px;
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke-width: 2px;
+	fill: none;
+}
+
+.responseCircleGraphs {
+    width: 108px;
+    height: 140px;
+    float: left;
+    margin-left: 20px;
+    position: relative;
+}
+
+.responseCircleGraphs span{
+	color: #ffffff;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    top: 53px;
+}
+
+#responseCircleGraph123 span{
+    top: 54px;
+    font-size: 18px;
+}
+
+.responseCircleGraphSpeeds{
+	top: 78px !important;
+	font-size: initial !important;
+}
+
+.deviceCircleGraphs {
+    width: 108px;
+    height: 125px;
+    float: left;
+    margin-left: 24px;
+    position: relative;
+}
+
+.deviceCircleGraphs svg {
+    margin-top: -8px;
+}
+
+.deviceCircleGraphs span{
+	color: #ffffff;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    top: 53px;
+}
+
+.deviceCircleGraphPercent{
+	top: 62px !important;
+	font-size: 14px !important;
+}
+
+#dataMapContainer {
+    width: 420px;
+    position: relative;
+    border-bottom: 1px solid rgba(0,103,169,0.5);
+    cursor: pointer;
+    margin-top: 4px;
+    height: 148px;
+    opacity: 0.7;
+}
+
+#dataMapContainer:hover {
+    background-color: rgba(0,103,169,0.1);
+}
+
+.dataMapContainerLarge {
+    width: 100%; 
+    height: 100%;
+    position: absolute; 
+    background-color: rgba(256, 256, 256, 0.1);
+    background-image: url(../images/dot.png);
+    opacity: 0;
+}
+
+.countryConnections {
+    position: absolute;
+    border-right: 1px solid rgba(0, 173, 239,0.3);
+    border-bottom: 1px solid rgba(0, 173, 239,0.3);
+    left: 122px;
+    width: 75px;
+    padding-left: 12px;
+    font-size: 18px;
+    top: 3px;
+}
+
+.countryIPs {
+    position: absolute;
+    left: 210px;
+    border-bottom: 1px solid rgba(0, 173, 239,0.3);
+    font-size: 18px;
+    width: 75px;
+    top: 3px;
+    padding-right: 12px;
+    text-align: right;
+}
+
+.endPointConnections {
+    position: absolute;
+    border-right: 1px solid rgba(0, 173, 239,0.3);
+    border-bottom: 1px solid rgba(0, 173, 239,0.3);
+    left: 122px;
+    width: 75px;
+    padding-left: 12px;
+    font-size: 18px;
+    top: 3px;
+}
+
+.endPointIPs {
+    position: absolute;
+    left: 210px;
+    border-bottom: 1px solid rgba(0, 173, 239,0.3);
+    font-size: 18px;
+    width: 75px;
+    top: 3px;
+    padding-right: 12px;
+    text-align: right;
+}
+
+#closeMap {
+    position: absolute;
+    top: 20px;
+    right: 13px;
+    cursor: pointer;
+    padding: 8px 14px 8px 14px;
+    color: white;
+    background-color: rgba(256, 256, 256, 0.08);
+    display: none;
+    z-index: 100;
+}
+
+#closeMap:hover {
+    color: #00adef;
+    box-shadow: inset 0px 0px 9px -1px #ffffff;
+}
+
+#switchMap {
+    position: absolute;
+    top: 20px;
+    left: 13px;
+    cursor: pointer;
+    display: none;
+}
+
+#switchMap span {
+    color: white;
+    float: left;
+    padding: 8px 14px 8px 14px;
+    background-color: rgba(256, 256, 256, 0.08);
+    margin-right: 3px;
+}
+
+#switchMap span:hover {
+    color: #00adef;
+}
+
+#switchMap span.active {
+   color: #00adef;
+   box-shadow: inset 0px 0px 9px -1px #ffffff;
+}
+
+.hoverinfo {
+    color: black;
+}
+
+#paneContentBottom div {
+    width:100%;
+    overflow: hidden;
+}
+
+.rickshaw_graph .y_ticks .tick line,
+.rickshaw_graph .x_ticks_d3 .tick {
+	stroke: rgba(256, 256, 256, 0.9) !important;
+	stroke-width: 2px;
+	shape-rendering: crisp-edges;
+	pointer-events: none;
+}
+.rickshaw_graph .y_grid .tick,
+.rickshaw_graph .x_grid_d3 .tick {
+	z-index: -1;
+	stroke: rgba(0,103,169,0.5) !important;
+	stroke-width: 1px;
+	stroke-dasharray: 1 0;
+}
+.rickshaw_graph .x_tick.inverse .title,
+.rickshaw_graph .y_ticks.inverse text {
+	fill: #ffffff;
+	color: #ffffff;
+	text-shadow: none;
+}
+
+#circleScatterGraph {
+    width: 420px;
+    height: 420px;
+    overflow: hidden;
+    position: absolute;
+    top: 66px;;
+}
+
+#circleScatterGraph div{
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#circleScatterGraph svg {
+    transition-property: transform;
+    transition-duration: 1s;
+    animation-name: rotate;
+    animation-duration: 400s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.deviceIcons {
+    position: absolute;
+}
+
+#mobileIcon {
+    height: 43px;
+    left: 60px;
+    top: 23px;
+}
+
+#tabletIcon {
+    height: 50px;
+    left: 190px;
+    top: 19px;
+}
+
+#monitorIcon {
+    height: 67px;
+    right: 51px;
+    top: 15px;
+}
+
+#spinning {
+    height: 40px;
+    margin-top: -7px;
+    float: right;
+    opacity: 0.6;
+}
+
+#settings {
+    height: 32px;
+    margin-top: -8px;
+    padding: 4px 0 4px 0;
+}
+
+.headerButton {
+    float: right;
+    opacity: 0.6;
+    width: 50px;
+    border-radius: 6px;
+}
+
+.countryName {
+    color: #00adef;
+    position: absolute;
+    top: 2.5px;
+}
+
+.endPointName {
+    color: #00adef;
+    position: absolute;
+    top: 2.5px;
+    font-size: 13px;
+    width: 113px;
+}
+
+.countryResponseValue {
+    font-size: 14px;
+    position: absolute;
+}
+
+.countryGraphContainers {
+    position: relative;
+    padding-left: 7px;
+    width: 413px;
+    background-color: rgba(0,103,169,0.02);
+    cursor: pointer;
+    height: 55px;
+}
+
+.countryGraphContainers:hover {
+    background-color: rgba(0,103,169,0.1);
+}
+
+.countryGraphContainersParents {
+    border-top: 1px solid rgba(0,103,169,0.5);
+    position: absolute;
+}
+
+.endPointResponseValue {
+    font-size: 14px;
+    position: absolute;
+}
+
+.endPointGraphContainers {
+    position: relative;
+    padding-left: 7px;
+    width: 413px;
+    background-color: rgba(0,103,169,0.02);
+    cursor: pointer;
+    height: 69px;
+    overflow: hidden;
+}
+
+.endPointGraphContainers:hover {
+    background-color: rgba(0,103,169,0.1);
+}
+
+.endPointGraphContainersParents {
+    border-top: 1px solid rgba(0,103,169,0.5);
+    position: absolute;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke: white;
+	stroke-width: 2px;
+	fill: none;
+}
+
+text {
+    fill: white;
+}
+
+.countryResponseTypeGraphs {
+    height: 64px;
+    position: absolute;
+    width: 79px;
+    top: 0;
+    right: 0;
+}
+
+.countryResponseTypeGraphs svg {
+    margin-top: -2px;
+    margin-left: -4px;
+}
+
+.countryResponseTimeLineGraphs {
+    height: 20px;
+    width: 350px;
+}
+
+.countryResponseTypeGraphs:hover {
+    background-color: rgba(0,103,169,0.08);
+}
+
+.countryGraphContainers .rickshaw_graph {
+    position: absolute;
+    bottom: 4px;
+    opacity: 0.7;
+}
+
+.countryGraphContainers .countryResponseTypeGraphs {
+    opacity: 0.8;
+}
+
+.endPointResponseTypeGraphs {
+    height: 64px;
+    position: absolute;
+    width: 79px;
+    top: 0;
+    right: 0;
+}
+
+.endPointResponseTypeGraphs svg {
+    margin-top: -2px;
+    margin-left: -4px;
+}
+
+.endPointResponseTimeLineGraphs {
+    height: 20px;
+    width: 350px;
+}
+
+.endPointResponseTypeGraphs:hover {
+    background-color: rgba(0,103,169,0.08);
+}
+
+.endPointGraphContainers .rickshaw_graph {
+    position: absolute;
+    bottom: 18px;
+    opacity: 0.7;
+    padding-top: 3px;
+}
+
+.endPointGraphContainers .endPointResponseTypeGraphs {
+    opacity: 0.8;
+}
+
+.lineGraph {
+    background-color: rgba(0,103,169,0.1);
+    border-top: 1px solid rgba(0,103,169,0.5);
+    border-bottom: 1px solid rgba(0,103,169,0.5);
+    opacity: 0.8;
+}
+
+.scatterCircleCenter {
+    height: 55px;
+    width: 55px !important;
+    background-color: #00adef;
+    border-radius: 35px;
+    bottom: 189px !important;
+    left: 182px !important;
+    box-shadow: 0px 0px 9px 3px #00adef;
+    display: none;
+}
+
+#connectionDensityWrapper div {
+    display: flex;
+    height: 55px;
+}
+
+#uniqueIPsPerMinute {
+    margin: 0 3px 3px 3px !important;
+}
+
+#connectionDensityWrapper span {
+    flex: 1;
+    text-align: center;
+    padding-top: 8px;
+    margin: 0 0 3px 0;
+    background-color: rgba(0,92,118,0.1);
+    border-top: 1px solid rgba(0,103,169,0.5);
+}
+
+#connectionDensityWrapper p{
+    font-size: 12px;
+    color: #00adef;
+    margin: 0;
+}
+
+#billingTotal {
+    font-size: 15px;
+    margin-right: 15px;
+}
+
+#timeLine {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    height: 90px;
+    width: calc(100% - 55px);
+    opacity: 0.7;
+    background-color: transparent;
+    box-shadow: 0px 0px 21px 1px #000000;
+    cursor: pointer; 
+}
+
+#timeLine > svg > g.y_ticks.inverse {
+    transform: translate(-55px, 0);
+}
+
+#timeLineLatency {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 40px;
+    width: calc(100% - 55px);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#timeLineLatency > svg > g.y_ticks.inverse {
+    transform: translate(-55px, 0);
+}
+
+#timeLine.rickshaw_graph .detail .x_label {
+    top: -80px;
+    border-radius: 3px 3px 0 0;
+    padding: 6px;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    position: absolute;
+    color: white;
+    opacity: 1;
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#timeLineLatency.rickshaw_graph .detail .x_label {
+    top: -172px;
+    border-radius: 3px 3px 0 0;
+    padding: 6px;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    position: absolute;
+    color: white;
+    opacity: 1;
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#timeLine.rickshaw_graph .detail {
+    color: black;
+    background: rgba(256,256,256,0.5);
+}
+
+#timeLine.rickshaw_graph .detail .dot {
+    width: 0px;
+    height: 5px;
+    margin-left: -1.18px;
+}
+
+#timeLine.rickshaw_graph .detail .item {
+    background: transparent;
+    border: 0;
+}
+
+#timeLine.rickshaw_graph .detail .item:after {
+    border: 0;
+}
+
+#timeLineLatency.rickshaw_graph .detail {
+    color: black;
+    background: rgba(256,256,256,0.5);
+}
+
+#timeLineLatency.rickshaw_graph .detail .dot {
+    width: 0px;
+    height: 5px;
+    margin-left: -1.18px;
+}
+
+#timeLineLatency.rickshaw_graph .detail .item {
+    background: transparent;
+    border: 0;
+}
+
+#timeLineLatency.rickshaw_graph .detail .item:after {
+    border: 0;
+}
+
+#countryGraphs {
+    width: 420px;
+    position: relative;
+}
+
+#endPointGraphs {
+    width: 420px;
+    position: absolute;
+    bottom: 248px;
+}
+
+#responseLineGraphs {
+    height: 70px;
+}
+
+#deviceImagesWrapper {
+    position: relative;
+}
+
+#deviceWrapper {
+    height: 92px;
+    width: 420px;
+    background-color: rgba(0,103,169,0.02);
+    border-top: 1px solid rgba(0,103,169,0.5);
+    border-bottom: 1px solid rgba(0,103,169,0.5);
+    position: absolute;
+    bottom: 7px;
+    left: 0px;
+}
+
+#trafficLineGraphs {
+    margin: 3px 0;
+    height: 86px;
+}
+
+#trafficLineGraphs div {
+    height: 86px;
+    width: 209px;
+    float: left;
+}
+
+#responseLineGraphs div {
+    height: 71px;
+    width: 140px;
+    float: left;
+    overflow: hidden;
+}
+
+[id='graph-Connections'] {
+    border-right: 1px solid rgba(0,103,169,0.5);
+}
+
+.rickshaw_graph .x_tick .title {
+    position: absolute;
+    font-size: 15px;
+    font-family: inherit;
+    opacity: 0.8;
+    white-space: nowrap;
+    background-color: transparent;
+    margin-left: 3px;
+    box-shadow: 0px 0px 21px 1px #000000;
+    bottom: 95px;
+    border-left: 1px solid #ffffff;
+    border-radius: 0;
+    padding: 0 6px;
+}
+
+#trafficLineGraphs .rickshaw_graph svg {
+    padding-top: 2px;
+    height: 59px;
+    overflow: hidden;
+}
+
+[id='graph-Unique IPs'] svg {
+    margin-left: 2px;
+}
+
+[id='graph-Connections'] svg {
+    margin-left: -1px;
+}
+
+rect {
+    fill-opacity: 0.9 !important;
+    stroke-opacity: 1 !important;
+    stroke-width: 0.5 !important;
+    stroke: white;
+}
+
+.rickshaw_graph svg {
+    overflow: visible;
+}
+
+#responseCodeGraph {
+    border-bottom: 1px solid rgba(0,103,169,0.5);
+    margin-bottom: 7px;
+}
+
+#responseCodeGraph svg {
+    width: 275px;
+    float: right;
+}
+
+#responseCodeValues {
+    position: absolute;
+    right: 0;
+}
+
+#responseCodeValue123 {
+    position: absolute;
+    right: 87px;
+    top: 65px;
+    width: 100px;
+    text-align: center;
+    color: #ffffff;
+}
+
+#responseCodeValue4xx {
+    position: absolute;
+    top: 87px;
+    right: 87px;
+    text-align: center;
+    width: 100px;
+    color: #ff7b00;
+}
+
+#responseCodeValue5xx {
+    position: absolute;
+    top: 43px;
+    right: 87px;
+    text-align: center;
+    width: 100px;
+    color: #ff0000;
+}
+
+#responseTime {
+    width: 62px;
+    float: left;
+    text-align: center;
+    height: 117px;
+    margin-top: 9px;
+    padding: 15px 27px 0 27px;
+    opacity: 0.8;
+    border-right: 1px solid rgba(0,103,169,0.5);
+}
+
+#responseTimeLabel {
+    color: #00adef;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+#timeTravelMarker {
+    position: absolute;
+    height: 177px;
+    width: 1px;
+    bottom: 0;
+    background-color: #00adef;
+    box-shadow: -5px 0px 14px 0.5px #00adef;
+    display: none;
+    z-index: 3;
+}
+
+#clockReset {
+    color: #ffffff;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 0 0 7px 0;
+    height: 23px;
+    padding-top: 5px;
+    cursor: pointer;
+    width: 54px;
+    font-size: 15px;
+    background-color: rgba(256,256,256,0.3);
+    display: none;
+}
+
+#clockReset:hover {
+    color: #000000;
+}
+
+#detailsCloseButton:hover {
+    background-color: rgba(0,103,169,0.1);
+    box-shadow: none;
+    border-radius: 0 0 9px 9px;
+}
+
+.filterInputs {
+    width: 60%;
+    color: white;
+    background-color: transparent;
+    border: 1px solid rgba(256,256,256, 0.5);
+}
+
+#settingsFilters {
+    font-size: 15px;
+    margin-top: 29px;
+}
+
+.trafficLineGraphsTotals {
+    color: #ffffff;
+    float: left;
+    font-size: 56px;
+    position: relative;
+    top: 39px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+}
+
+.trafficLineGraphsTitles {
+    float: left;
+    position: absolute;
+    width: 100%;
+    font-size: 13px;
+    padding-top: 3px;
+    text-align: center;
+}
+
+.responseLineGraphsTotals {
+    color: #ffffff;
+    float: left;
+    font-size: 43px;
+    position: relative;
+    top: 35px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+    text-indent: 29px;
+}
+
+.responseLineGraphsTitles {
+    float: left;
+    position: absolute;
+    width: 100%;
+    font-size: 13px;
+    padding-top: 3px;
+    text-align: center;
+}
+
+.endPointResponseTimeGraphs {
+    bottom: -1px !important;
+}
+
+.endPointResponseTimes {
+    position: absolute;
+    bottom: -2px;
+    font-size: 16px;
+    right: 12px;
+}
+
+@-moz-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+
+  100% {
+    background-position: top right;
+  }
+}
+
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+
+  100% {
+    background-position: top right;
+  }
+}
+
+@-o-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+
+  100% {
+    background-position: top right;
+  }
+}
+
+@-ms-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+
+  100% {
+    background-position: top right;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+
+  100% {
+    background-position: top right;
+  }
+}
+
+#appTitle {
+    position: absolute;
+    left: 0;
+    top: 13px;
+    padding-top: 4px;
+    width: 420px;
+    margin-left: -130px;
+  text-align: center;
+  color: rgba(83,32,113,0.1);
+  background: -webkit-gradient(linear,left top,right top,from(#006991),to(#006991),color-stop(.5,#fff));
+  background: -moz-gradient(linear,left top,right top,from(#006991),to(#006991),color-stop(.5,#fff));
+  background: gradient(linear,left top,right top,from(#006991),to(#006991),color-stop(.5,#fff));
+  -webkit-background-size: 75px 100%;
+  -moz-background-size: 75px 100%;
+  background-size: 75px 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-animation-name: shimmer;
+  -moz-animation-name: shimmer;
+  -webkit-animation-name: shimmer;
+  animation-name: shimmer;
+  -webkit-animation-duration: 40s;
+  -moz-animation-duration: 40s;
+  -webkit-animation-duration: 40s;
+  animation-duration: 40s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  background-repeat: no-repeat;
+  background-position: 100px 100px;
+  background-color: #006991;
+}
+
+.tradeMark {
+    font-size: 10px;
+    left: 149px;
+    top: 21px;
+    position: absolute;
+    z-index: 2;
+    color: #006991;
+}

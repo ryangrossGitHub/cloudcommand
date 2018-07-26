@@ -1,0 +1,12 @@
+[
+    {"InstanceId":"i-0db29a40ca7db9edc","cpu":21,"StateName":"running","StateTransitionReason":"","InstanceType":"t2.nano","LaunchTime":"2017-01-26T12:28:44.000Z","AvailabilityZone":"us-east-1d","MonitoringState":"disabled","SubnetId":"subnet-a1599af9","VpcId":"vpc-d684feb2","PublicIpAddress":"54.152.48.212","Tags":[{"Key":"Name","Value":"test server"}],"SecurityGroups":[{"GroupName":"dev ec2","GroupId":"sg-0b6fdb77"}],"type":"ec2","cloud":"aws"},
+    {"LoadBalancerName":"test","DNSName":"test-1649197845.us-east-1.elb.amazonaws.com","ListenerDescriptions":[{"Listener":{"Protocol":"HTTP","LoadBalancerPort":80,"InstanceProtocol":"HTTP","InstancePort":80},"PolicyNames":[]}],"AvailabilityZones":["us-east-1b","us-east-1c","us-east-1d","us-east-1e"],"Subnets":["subnet-15708f3f","subnet-84c26af2","subnet-98d94ba5","subnet-a1599af9"],"VPCId":"vpc-d684feb2","Instances":[{"InstanceId":"i-0db29a40ca7db9edc"}],"HealthCheck":{"Target":"HTTP:80/index.html","Interval":30,"Timeout":5,"UnhealthyThreshold":2,"HealthyThreshold":10},"SecurityGroups":["sg-08742171"],"CreatedTime":"2017-01-26T13:54:00.820Z","Scheme":"internet-facing","type":"elb","cloud":"aws"},
+    {"DBInstanceIdentifier":"identifier","DBInstanceClass":"db.t2.micro","Engine":"mysql","DBInstanceStatus":"creating","DBName":"testDB","AllocatedStorage":5,"DBSecurityGroups":[],"VpcSecurityGroups":[{"VpcSecurityGroupId":"sg-122f996e","Status":"active"}],"AvailabilityZone":"us-east-1c","VpcId":"vpc-d684feb2","Subnets":[{"SubnetIdentifier":"subnet-98d94ba5","SubnetAvailabilityZone":{"Name":"us-east-1e"},"SubnetStatus":"Active"},{"SubnetIdentifier":"subnet-84c26af2","SubnetAvailabilityZone":{"Name":"us-east-1c"},"SubnetStatus":"Active"},{"SubnetIdentifier":"subnet-a1599af9","SubnetAvailabilityZone":{"Name":"us-east-1d"},"SubnetStatus":"Active"},{"SubnetIdentifier":"subnet-15708f3f","SubnetAvailabilityZone":{"Name":"us-east-1b"},"SubnetStatus":"Active"}],"type":"rds","cloud":"aws"},
+    {"id":"costAverage","type":"cost","value":"345.12"},
+    {"id":"costCurrent","type":"cost","value":"228.90"},
+    {"id":"costForcast","type":"cost","value":"320.21"},
+    {"id":"elb1","type":"traffic","lat":38.9072,"lon":-77.0369},
+    {"id":"10:21:23","type":"event","value":"User 583733 performed action x."},
+    {"id":"10:22:04","type":"event","value":"User 257289 performed action y."},
+    {"id":"10:23:47","type":"event","value":"User 001457 performed action z."}
+]
